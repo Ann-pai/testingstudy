@@ -94,3 +94,46 @@ case "$ftype" in
 *)
    echo "File $1 can not be uncompressed with smartzip";;
 esac
+
+#select循环语句：用户可以从一组不同的值中进行选择
+#e.g.
+#!/bin/bash
+echo "What is your favourite OS?"
+select var in "Linux" "Gnu Hurd" "Free BSD" "Other"; do
+  break;
+done
+echo "You have selected $var"
+#运行结果
+What is your favourite OS?
+1) Linux
+2) Gnu Hurd
+3) Free BSD
+4) Other
+#? 1
+You have selected Linux
+
+#while、for循环
+#关键字"break"用来跳出循环，而关键字”continue”则可以跳过一个循环的余下部分，直接跳到下一次循环中
+while ...; do
+   ....
+done
+#for循环会查看一个字符串列表（字符串用空格分隔），并将其赋给一个变量：
+for var in ....; do
+   ....
+done
+#实用的脚本showrpm，其功能是打印一些RPM包的统计信息
+#!/bin/bash
+
+# list a content summary of a number of RPM packages
+# USAGE: showrpm rpmfile1 rpmfile2 ...
+# EXAMPLE: showrpm /cdrom/RedHat/RPMS/*.rpm
+for rpmpackage in "$@"; do
+   if [ -r "$rpmpackage" ];then  # $@，该变量包含有输入的所有命令行参数值。如果不加引号，带空格的参数会被截断。
+      echo "=============== $rpmpackage =============="
+      rpm -qi -p $rpmpackage
+   else
+      echo "ERROR: cannot read file $rpmpackage"
+   fi
+done
+#如果你运行showrpm openssh.rpm w3m.rpm webgrep.rpm，那么 "$@"(有引号) 就包含有 3 个字符串，即openssh.rpm, w3m.rpm和 webgrep.rpm。
+# $*的意思是差不多的。但是只有一个字串。
