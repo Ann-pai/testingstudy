@@ -69,3 +69,28 @@ mailfolder=/var/spool/mail/james
 [ -r "$mailfolder" ] || { echo "Can not read $mailfolder"; exit 1; }  #使用花括号以组合命令的形式将两个命令放到一起作为一个命令使用
 echo "$mailfolder has mail from:"
 grep "^From " $mailfolder
+
+
+#case语句：case表达式可以用来匹配一个给定的字符串，而不是数字
+case ... in
+   ...) do something here
+   ;;
+esac
+file lf.gz #file命令可以辨别出一个给定文件的文件类型
+#输出结果：
+lf.gz: gzip compressed data, deflated, original filename,
+last modified: Mon Aug 27 23:09:18 2001, os: Unix
+
+#e.g.该脚本可以自动解压bzip2, gzip和zip 类型的压缩文件
+#!/bin/bash
+ftype="$(file "$1")"  #$1，该变量包含有传递给该脚本的第一个参数值
+case "$ftype" in
+"$1: Zip archive"*)
+   unzip "$1" ;;
+"$1: gzip compressed"*)
+   gunzip "$1" ;;
+"$1: bzip2 compressed"*)
+   bunzip2 "$1" ;;
+*)
+   echo "File $1 can not be uncompressed with smartzip";;
+esac
