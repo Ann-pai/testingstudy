@@ -137,3 +137,6 @@ for rpmpackage in "$@"; do
 done
 #如果你运行showrpm openssh.rpm w3m.rpm webgrep.rpm，那么 "$@"(有引号) 就包含有 3 个字符串，即openssh.rpm, w3m.rpm和 webgrep.rpm。
 # $*的意思是差不多的。但是只有一个字串。
+
+
+#Shell里的一些特殊符号
